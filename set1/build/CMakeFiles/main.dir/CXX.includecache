@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/grmt/graphs/1/matrices.cpp
+matrices.h
+/home/grmt/graphs/1/matrices.h
+
+/home/grmt/graphs/1/matrices.h
+iostream
+-
+vector
+-
+string
+-
+stdio.h
+-
+string.h
+-
+
