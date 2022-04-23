@@ -1,5 +1,0 @@
-/home/grmt/graphs/1/build/CMakeFiles/rebuild_cache.dir
-/home/grmt/graphs/1/build/CMakeFiles/check.dir
-/home/grmt/graphs/1/build/CMakeFiles/edit_cache.dir
-/home/grmt/graphs/1/build/CMakeFiles/main.dir
-/home/grmt/graphs/1/build/CMakeFiles/run.dir
