@@ -102,3 +102,54 @@ void AdjList::plotGraph() const
     plt::axis("off");
     plt::show();
 }
+
+bool contains(std::vector<int> v, int x)
+{
+    for(int x1 : v)
+        if(x == x1)
+            return true;
+    return false;
+}
+
+void AdjList::createG_nm(unsigned int n, unsigned int m)
+{
+    _tab.clear();
+    srand(time(NULL));
+    
+    _tab = std::vector<std::vector<int>>(n);
+    unsigned int i = 0, n1, n2;
+
+    while(i < m)
+    {
+        n1 = rand()%n + 1;
+        n2 = rand()%n + 1;
+        while(n1 == n2)
+            n1 = rand()%n + 1;
+        if(!contains(_tab[n2 - 1], n1) && !contains(_tab[n1 - 1], n2))
+        {
+            _tab[n1 - 1].push_back(n2);
+            _tab[n2 - 1].push_back(n1);
+            ++i;
+        }
+    }
+}
+
+void AdjList::createG_np(unsigned int n, double p)
+{
+    _tab.clear();
+    srand(time(NULL));
+    
+    _tab = std::vector<std::vector<int>>(n);
+    double r;
+
+    for(size_t n1 = 1; n1 <= n; ++n1)
+        for(size_t n2 = n1 + 1; n2 <= n; ++n2)
+        {
+            r = (double)rand() / RAND_MAX * 1.;
+            if(r <= p && !contains(_tab[n2 - 1], n1) && !contains(_tab[n1 - 1], n2))
+            {
+                _tab[n1 - 1].push_back(n2);
+                _tab[n2 - 1].push_back(n1);
+            }
+        }
+}

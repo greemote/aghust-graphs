@@ -3,7 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <stdio.h>
+#include <ctime>
+#include <cstdlib>
 #include <string.h>
 #include <math.h>
 #include "matplotlibcpp.h"
@@ -41,6 +42,9 @@ public:
     void convertToAdjMatrix(Matrix*) const;
 
     void plotGraph() const;
+
+    void createG_nm(unsigned int, unsigned int);
+    void createG_np(unsigned int, double);
 };
 
 class AdjMatrix : public Matrix
