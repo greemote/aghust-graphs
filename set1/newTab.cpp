@@ -24,11 +24,11 @@ bool NewTab::checkIf01() const
 
 bool NewTab::checkIfAdjMatrix() const
 {
-    unsigned int rows = _tab.size();
+    size_t rows = _tab.size();
     for(auto v : _tab)
         if(v.size() != rows)
             return false;
-    for(unsigned int i =  0; i < rows; ++i)
+    for(size_t i =  0; i < rows; ++i)
         if(_tab[i][i] != 0)
             return false;
     return true;
@@ -50,16 +50,18 @@ bool NewTab::checkIfIncMatrix() const
 bool NewTab::checkIfAdjList() const
 {
     NewTab* temp = new NewTab;
-    unsigned int n = _tab.size();
+    size_t n = _tab.size();
     std::vector<int> v;
-    for(unsigned int i = 0; i < n; ++i)
+    for(size_t i = 0; i < n; ++i)
         v.push_back(0);
-    for(unsigned int i = 0; i < n; ++i)
+    for(size_t i = 0; i < n; ++i)
         temp->_tab.push_back(v);
-    for(unsigned int i = 0; i < n; ++i)
-        for(unsigned int j = 0; j < _tab[i].size(); ++j)
+    for(size_t i = 0; i < n; ++i)
+        for(size_t j = 0; j < _tab[i].size(); ++j)
             temp->_tab[i][_tab[i][j] - 1] = 1;
-    return temp->checkIfAdjMatrix();
+    bool adjMatrix = temp->checkIfAdjMatrix();
+    delete temp;
+    return adjMatrix;
 }
 
 void NewTab::fill(AdjList* aL, AdjMatrix* aM, IncMatrix* iM) const

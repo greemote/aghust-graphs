@@ -10,7 +10,7 @@ void AdjList::convertToAdjMatrix(Matrix* aM) const
     for(int i = 0; i < n; ++i)
         temp.push_back(v);
     for(int i = 0; i < n; ++i)
-        for(unsigned int j = 0; j < _tab[i].size(); ++j)
+        for(size_t j = 0; j < _tab[i].size(); ++j)
             temp[i][_tab[i][j] - 1] = 1;
     
     aM->create(temp);
@@ -18,7 +18,7 @@ void AdjList::convertToAdjMatrix(Matrix* aM) const
 
 void AdjMatrix::convertToIncMatrix(Matrix* iM) const
 {
-    unsigned int n = _tab.size();
+    size_t n = _tab.size();
     int e = 0;
     for(auto v : _tab)
         for(int x : v)
@@ -26,8 +26,8 @@ void AdjMatrix::convertToIncMatrix(Matrix* iM) const
     e /= 2.0;
     std::vector<std::vector<int>> temp(n, std::vector<int>(e, 0));
     e = 0;
-    for(unsigned int i = 0; i < n; ++i)
-        for(unsigned int j = i + 1; j <= n; ++j)
+    for(size_t i = 0; i < n; ++i)
+        for(size_t j = i + 1; j <= n; ++j)
             if(_tab[i][j])
             {
                 temp[i][e] = temp[j][e] = 1;
@@ -38,10 +38,10 @@ void AdjMatrix::convertToIncMatrix(Matrix* iM) const
 
 void AdjMatrix::convertToAdjList(Matrix* aL) const
 {
-    unsigned int n = _tab.size();
+    size_t n = _tab.size();
     std::vector<std::vector<int>> temp(n);
-    for(unsigned int i = 0; i < n; ++i)
-        for(unsigned int j = 0; j < n; ++j)
+    for(size_t i = 0; i < n; ++i)
+        for(size_t j = 0; j < n; ++j)
             if(_tab[i][j] == 1)
                 temp[i].push_back(j + 1);
     aL->create(temp);
@@ -50,12 +50,12 @@ void AdjMatrix::convertToAdjList(Matrix* aL) const
 
 void IncMatrix::convertToAdjMatrix(Matrix* aM) const
 {
-    unsigned int size = _tab.size();
+    size_t size = _tab.size();
     std::vector<std::vector<int>> temp(size, std::vector<int>(size));
 
     int a, b;
-    unsigned int n;
-    for(unsigned int e = 0; e < _tab[0].size(); ++e)
+    size_t n;
+    for(size_t e = 0; e < _tab[0].size(); ++e)
     {
         a = -1;
         b = -1;
@@ -71,4 +71,34 @@ void IncMatrix::convertToAdjMatrix(Matrix* aM) const
         temp[a][b] = temp[b][a] = 1;
     }
     aM->create(temp);
+}
+
+void AdjList::plotGraph() const
+{
+    int r = 10;
+    size_t size = _tab.size();
+    double alpha = 360. / size;
+    double angle;
+    std::vector<double> x, y;
+    double x1, y1, x2, y2;
+
+    for(size_t i = 0; i < size; ++i)
+    {
+        angle = alpha * i;
+        x1 = -r * cos(angle * M_PI / 180.);
+        y1 = r * sin(angle * M_PI / 180.);
+        x.push_back(x1);
+        y.push_back(y1);
+        plt::text(x1, y1, std::to_string(i + 1));
+
+        for(auto j : _tab[i])
+        {
+            x2 = -r * cos(alpha * (j - 1) * M_PI / 180.);
+            y2 = r * sin(alpha * (j - 1) * M_PI / 180.);
+            plt::plot({x1, x2}, {y1, y2}, {{"c", "lightgrey"}, {"ls", "-"}});
+        }
+    }
+    plt::plot(x, y, {{"c", "lightblue"}, {"marker", "D"}, {"ls", ""}});
+    plt::axis("off");
+    plt::show();
 }

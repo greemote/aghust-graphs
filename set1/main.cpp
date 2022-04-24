@@ -4,7 +4,6 @@
 
 int main()
 {
-
     std::string filename;
     std::string text;
     NewTab* tab = new NewTab;
@@ -24,6 +23,8 @@ int main()
     tab->readTab();
 
     tab->fill(aL, aM, iM);
+
+    aL->plotGraph();
 
     delete tab;
     delete aL;

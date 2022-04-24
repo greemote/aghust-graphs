@@ -5,6 +5,10 @@
 #include <string>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
+#include "matplotlibcpp.h"
+
+namespace plt = matplotlibcpp;
 
 class Matrix
 {
@@ -35,6 +39,8 @@ class AdjList : public Matrix
 public:
 
     void convertToAdjMatrix(Matrix*) const;
+
+    void plotGraph() const;
 };
 
 class AdjMatrix : public Matrix
