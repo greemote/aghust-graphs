@@ -1,4 +1,4 @@
-requires python and matplotlib to work properly
+requires python (and its libraries: matplotlib and numpy) to work properly
 the inputs are stored in the /build folder
 
 matplotlib-cpp credit: https://github.com/lava/matplotlib-cpp
