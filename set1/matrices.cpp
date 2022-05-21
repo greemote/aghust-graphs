@@ -27,7 +27,7 @@ void AdjMatrix::convertToIncMatrix(Matrix* iM) const
     std::vector<std::vector<int>> temp(n, std::vector<int>(e, 0));
     e = 0;
     for(size_t i = 0; i < n; ++i)
-        for(size_t j = i + 1; j <= n; ++j)
+        for(size_t j = i; j < n; ++j)
             if(_tab[i][j])
             {
                 temp[i][e] = temp[j][e] = 1;

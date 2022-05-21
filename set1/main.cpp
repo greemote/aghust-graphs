@@ -35,13 +35,13 @@ int main()
     aL->plotGraph();
 
     delete aL;
-
-    //task3
+/*
+    //task3a
 
     unsigned int n, m;
     std::cout << "type in the number of nodes and edges to create a random graph: ";
     do std::cin >> n >> m;
-    while(n < 0 || m < 0 || m > n * (n - 1) / 2);
+    while(n < 0 || m < 0 || m > n * (n - 1) / 2.);
 
     AdjList* G_nm = new AdjList;
 
@@ -49,6 +49,8 @@ int main()
     G_nm->plotGraph();
 
     delete G_nm;
+    
+    //task3b
 
     double p;
     std::cout << "type in the number of nodes and the probability of creating an edge: ";
@@ -61,6 +63,6 @@ int main()
     G_np->plotGraph();
 
     delete G_np;
-
+*/
     return 0;
 }
