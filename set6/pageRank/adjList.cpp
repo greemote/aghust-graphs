@@ -27,10 +27,10 @@ void AdjList::convertToAdjMatrix(std::vector<std::vector<int>>& adjMatrix) const
     int n = _tab.size();
     std::vector<int> v;
     for(int i = 0; i < n; ++i)
-        v.push_back(0.);
+        v.push_back(0);
     for(int i = 0; i < n; ++i)
         adjMatrix.push_back(v);
     for(int i = 0; i < n; ++i)
         for(size_t j = 0; j < _tab[i].size(); ++j)
-            adjMatrix[i][_tab[i][j]] = 1.;
+            adjMatrix[i][_tab[i][j]] = 1;
 }

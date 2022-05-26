@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
+#include <float.h>
 #include "adjList.h"
 
 void printResult(double* result, char* rank, int size)
@@ -59,17 +61,18 @@ void pageRank1(AdjList* graph, double d, int n, int node = 0)
     printResult(result, rank, size);
 }
 
-void pageRank2(AdjList* graph, double d, int t1)
+void pageRank2(AdjList* graph, double d)
 {
     int size = graph->getSize();
     std::vector<std::vector<int>> A {};
     std::vector<std::vector<double>> P(size, std::vector<double>(size, 0.));
-    double p[size], temp[size];
+    double p0[size], p1[size], diff[size];
     char rank[size];
+    double err = DBL_MAX;
     for(int i = 0; i < size; ++i)
     {
-        p[i] = 1. / size;
-        temp[i] = 0.;
+        p0[i] = 1. / size;
+        p1[i] = 0.;
         rank[i] = i + 65;
     }   
 
@@ -77,30 +80,42 @@ void pageRank2(AdjList* graph, double d, int t1)
 
     for(int i = 0; i < size; ++i)
         for(int j = 0; j < size; ++j)
-            P[i][j] = (1. - d) * A[i][j] / graph->getNodes(j).size() + d / size;
+            P[i][j] = (1. - d) * A[i][j] / graph->getNodes(i).size() + d / size;
 
-    for(int t = 0; t < t1; ++t)
+    int iter = 0;
+    while(err > 1e-8)
+    {
         for(int i = 0; i < size; ++i)
         {
+            p1[i] = 0.;
             for(int j = 0; j < size; ++j)
-                temp[i] += P[i][j] * p[j];
-            p[i] = temp[i];
-            temp[i] = 0.;
+                p1[i] += P[j][i] * p0[j];
         }
 
-    printResult(p, rank, size);
+        err = 0.;
+        for(int i = 0; i < size; ++i)
+        {
+            diff[i] = p1[i] - p0[i];
+            err += fabs(diff[i]);
+
+            p0[i] = p1[i];
+        }
+        ++iter;
+    }
+
+    printResult(p0, rank, size);
+    std::cout << "iterations: " << iter << std::endl;
 }
 
 int main()
 {
     AdjList* graph = new AdjList("input.txt");
-    //graph->readTab();
 
     srand(time(NULL));
 
     pageRank1(graph, 0.15, 1000000);
     std::cout << std::endl;
-    pageRank2(graph, 0.15, 31);
+    pageRank2(graph, 0.15);
 
     delete graph;
 }
