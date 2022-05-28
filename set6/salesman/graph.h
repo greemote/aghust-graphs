@@ -14,10 +14,13 @@ class Node
 
 public:
 
-    Node(double x, double y) : _x(x), _y(y) {}
+    inline Node(double x, double y) : _x(x), _y(y) {}
 
-    double getX() const { return _x; }
-    double getY() const { return _y; }
+    inline double getX() const { return _x; }
+    inline double getY() const { return _y; }
+
+    inline void setX(double x) { _x = x; }
+    inline void setY(double y) { _y = y; }
 };
 
 class Edge
@@ -28,15 +31,15 @@ class Edge
 
 public:
 
-    Edge(Node* n1, Node* n2) : _n1(n1), _n2(n2) { updateLength(); }
+    inline Edge(Node* n1, Node* n2) : _n1(n1), _n2(n2) { updateLength(); }
 
-    Node* getN1() const { return _n1; }
-    Node* getN2() const { return _n2; }
-    double getLength() const { return _l; }
+    inline Node* getN1() const { return _n1; }
+    inline Node* getN2() const { return _n2; }
+    inline double getLength() const { return _l; }
 
-    void setN1(Node* n) { _n1 = n; }
-    void setN2(Node* n) { _n2 = n; }
-    void updateLength()
+    inline void setN1(Node* n) { _n1 = n; }
+    inline void setN2(Node* n) { _n2 = n; }
+    inline void updateLength()
     {
         _l = sqrt(pow(_n1->getX() - _n2->getX(), 2) +  pow(_n1->getY() - _n2->getY(), 2));
     }
@@ -49,15 +52,15 @@ class Graph
 
 public:
 
-    ~Graph() { clear(); }
+    inline ~Graph() { clear(); }
 
     void addNode(double x, double y);
-    void closeGraph()
+    inline void closeGraph()
     {
         if(nodes.size() > 1)
             edges.push_back(new Edge(nodes.back(), nodes.front()));
     }
-    double calculateLength() const
+    inline double calculateLength() const
     {
         double length = 0.;
         for(auto e : edges)
@@ -69,5 +72,6 @@ public:
     void getRandomEdges(std::vector<int>&) const;
     void swapEdges(std::vector<int>&);
     void clear();
-    void copy(const Graph*);
+
+    Graph& operator=(const Graph&);
 };

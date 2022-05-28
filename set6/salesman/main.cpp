@@ -1,6 +1,6 @@
 #include "graph.h"
 
-#define MAX_IT 10
+#define MAX_IT 10000
 
 void simulatedAnnealing(Graph* graph)
 {
@@ -13,18 +13,18 @@ void simulatedAnnealing(Graph* graph)
         for(int it = 0; it < MAX_IT; ++it)
         {
             graph->getRandomEdges(edges);
-            graph1->copy(graph);
+            *graph1 = *graph;
             graph1->swapEdges(edges);
             if(graph1->calculateLength() < graph->calculateLength())
             {
-                graph->copy(graph1);
+                *graph = *graph1;
             }
             else
             {
                 r = (double)rand() / RAND_MAX;
-                if(r < exp((graph1->calculateLength() - graph->calculateLength()) / -T))
+                if(r < exp(-(graph1->calculateLength() - graph->calculateLength()) / T))
                 {
-                    graph->copy(graph1);
+                    *graph = *graph1;
                 }
             }
         }
@@ -45,6 +45,7 @@ int main()
 {
     Graph* graph = new Graph;
     std::string text;
+    //std::ifstream file("input_50.dat");
     std::ifstream file("input_150.dat");
 
     while(getline(file, text))

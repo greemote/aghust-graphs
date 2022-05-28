@@ -63,18 +63,14 @@ void Graph::swapEdges(std::vector<int>& e)
 {
     if(!edges.empty())
     {
-        Node* a = edges[e[0]]->getN1();
         Node* b = edges[e[0]]->getN2();
         Node* c = edges[e[1]]->getN1();
-        Node* d = edges[e[1]]->getN2();
 
-        Edge* newEdge1 = new Edge(a, c);
-        Edge* newEdge2 = new Edge(b, d);
-
-        delete edges[e[0]];
-        edges[e[0]] = newEdge1;
-        delete edges[e[1]];
-        edges[e[1]] = newEdge2;
+        Node temp(b->getX(), b->getY());
+        b->setX(c->getX());
+        b->setY(c->getY());
+        c->setX(temp.getX());
+        c->setY(temp.getY());
 
         edges[e[0]]->updateLength();
         edges[e[1]]->updateLength();
@@ -96,19 +92,19 @@ void Graph::clear()
     }
 }
 
-void Graph::copy(const Graph* g)
+Graph& Graph::operator=(const Graph& g)
 {
     clear();
-    if(!g->edges.empty())
+    if(!g.nodes.empty())
     {
-        Node* n = new Node(g->edges.front()->getN1()->getX(), g->edges.front()->getN1()->getY());
-        nodes.push_back(n);
-        for(size_t i = 0; i < g->edges.size() - 1; ++i)
+        nodes.push_back(new Node(g.nodes.front()->getX(), g.nodes.front()->getY()));
+        for(size_t i = 1; i < g.nodes.size(); ++i)
         {
-            n = new Node(g->edges[i]->getN2()->getX(), g->edges[i]->getN2()->getY());
+            Node* n = new Node(g.nodes[i]->getX(), g.nodes[i]->getY());
             edges.push_back(new Edge(nodes.back(), n));
             nodes.push_back(n);
         }
         edges.push_back(new Edge(nodes.back(), nodes.front()));
     }
+    return *this;
 }
